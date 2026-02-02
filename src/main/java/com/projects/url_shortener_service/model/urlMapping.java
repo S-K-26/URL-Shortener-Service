@@ -1,7 +1,6 @@
 package com.projects.url_shortener_service.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
