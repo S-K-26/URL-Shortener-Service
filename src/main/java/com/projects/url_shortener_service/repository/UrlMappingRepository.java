@@ -1,6 +1,6 @@
 package com.projects.url_shortener_service.repository;
 
-import com.projects.url_shortener_service.model.urlMapping;
+import com.projects.url_shortener_service.model.UrlMapping;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -19,7 +19,7 @@ import java.util.Optional;
  * for managing 'UrlMapping' entities, and the type of the entity's
  * primary key is 'Long'.
  */
-public interface urlMappingRepository extends JpaRepository<urlMapping, Long> {
+public interface UrlMappingRepository extends JpaRepository<UrlMapping, Long> {
 
     /**
      * This is a custom derived query method. Spring Data JPA will automatically
@@ -41,5 +41,5 @@ public interface urlMappingRepository extends JpaRepository<urlMapping, Long> {
      * @param shortCode The short code to search for in the database.
      * @return An Optional containing the UrlMapping if found, or an empty Optional otherwise.
      */
-    Optional<urlMapping> findByShortCode(String shortCode);
+    Optional<UrlMapping> findByShortCode(String shortCode);
 }

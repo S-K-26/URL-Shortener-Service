@@ -2,6 +2,8 @@ package com.projects.url_shortener_service.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -13,9 +15,11 @@ import java.time.LocalDateTime;
  * database table, holding the crucial link between an original, long URL and the
  * short code we generate for it.
  * */
-@Entity
 @Getter
-public class urlMapping {
+@Setter
+@NoArgsConstructor
+@Entity
+public class UrlMapping {
 
     /**
      * The unique identifier for each URL mapping. This will serve as the Primary Key
@@ -46,6 +50,7 @@ public class urlMapping {
      *       against errors caused by exceptionally long URLs.
      */
     @Lob
+    @Column(nullable = false) // Good Practice : Original URL should not be null.
     private String originalUrl;
 
     /**
