@@ -3,6 +3,7 @@ package com.projects.url_shortener_service.service;
 import com.projects.url_shortener_service.model.UrlMapping;
 import com.projects.url_shortener_service.repository.UrlMappingRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -28,6 +29,11 @@ public class UrlShortenerService {
         this.urlMappingRepository = urlMappingRepository;
     }
 
+    // By default, repository methods are transactional. However, our method orchestrates
+    // multiple database operations. Wrapping it in @Transactional ensures that these
+    // operations are executed as a single, atomic unit. If any part fails, all
+    // previous operations in the method are rolled back.
+    @Transactional
     public String shortenUrl(String originalUrl) {
 
         UrlMapping urlMapping = new UrlMapping();
@@ -37,6 +43,10 @@ public class UrlShortenerService {
         UrlMapping savedEntity = urlMappingRepository.save(urlMapping);
 
         String shortCode = encodeBase62(savedEntity.getId());
+
+        savedEntity.setShortCode(shortCode);
+
+        urlMappingRepository.save(savedEntity);
 
         return shortCode;
     }
