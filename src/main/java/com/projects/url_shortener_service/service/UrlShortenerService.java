@@ -51,6 +51,17 @@ public class UrlShortenerService {
         return shortCode;
     }
 
+    public String getOriginalUrlWithInccrementalCLicks(String shortCode) {
+        UrlMapping urlMapping = urlMappingRepository.findByShortCode(shortCode)
+                .orElseThrow(() -> new RuntimeException("Short code not found: " + shortCode));
+
+        // Increment the click count
+        urlMapping.setClickCount(urlMapping.getClickCount() + 1);
+        urlMappingRepository.save(urlMapping);
+
+        return urlMapping.getOriginalUrl();
+    }
+
     private String encodeBase62(Long id) {
         // If no is 0 we return the first character of our character set
         if (id == 0){
